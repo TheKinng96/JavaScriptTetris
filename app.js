@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'green',
     'blue'
   ]
+  const levelSelector = document.querySelector("select")
+
+  function changeLevel (e) {
+    const selectedLevel = e.target.name
+    console.log(selectedLevel)
+  }
+changeLevel()
 
   const lTetromino = [
     [1, width + 1, width * 2 + 1, 2],
