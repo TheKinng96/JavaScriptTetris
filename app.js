@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // array from will give label to all div
   const scoreDisplay = document.getElementById('score')
   const startBtn = document.getElementById('startBtn')
+  const levelSelector = document.querySelector("select")
   const width = 10
   let nextRandom = 0
   let timerId
@@ -15,13 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'green',
     'blue'
   ]
-  const levelSelector = document.querySelector("select")
-
-  function changeLevel (e) {
-    const selectedLevel = e.target.name
-    console.log(selectedLevel)
-  }
-changeLevel()
 
   const lTetromino = [
     [1, width + 1, width * 2 + 1, 2],
@@ -190,6 +184,15 @@ changeLevel()
     })
   }
 
+
+  // change level
+  let selectedLevel
+
+  levelSelector.addEventListener('change', function(e) {
+    selectedLevel = e.target.value
+    console.log(selectedLevel)
+  })
+
   // add functionality to the button
   startBtn.addEventListener('click', () => {
     if (timerId) {
@@ -197,7 +200,12 @@ changeLevel()
       timerId = null
     } else {
       draw()
-      timerId = setInterval(moveDown, 1000)
+      if (!selectedLevel) {
+        timerId = setInterval(moveDown, 1000)
+      } else {
+        timerId = setInterval(moveDown, selectedLevel)
+      }
+      
       nextRandom = Math.floor(Math.random() * theTetrominoes.length)
       displayShape()
     }
